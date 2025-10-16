@@ -1,0 +1,37 @@
+import React, { useState, useEffect } from "react";
+import "./App.css";  // Assuming you have an external CSS file
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.body.classList.add(savedTheme);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.body.classList.remove(theme);
+    document.body.classList.add(newTheme);
+  };
+
+  return (
+    <div className="theme-container">
+      <h1>{theme === "light" ? "Light Mode" : "Dark Mode"}</h1>
+      <button
+        onClick={toggleTheme}
+        aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+        className="toggle-btn"
+      >
+        Toggle Theme
+      </button>
+    </div>
+  );
+}
+
+export default ThemeToggle;
